@@ -128,61 +128,58 @@ vector<tCoste> Dijkstra(const GrafoP<tCoste>& G,
    return D;
 }
 
+
 template <typename tCoste>
 vector<tCoste> DijkstraInv(const GrafoP<tCoste>& G,
-                           typename GrafoP<tCoste>::vertice destino,
-                           vector<typename GrafoP<tCoste>::vertice>& P)
-// Calcula los caminos de coste mínimo hasta destino desde todos los demás
-// vértices del grafo G. En el vector D de tamaño G.numVert()
-// devuelve estos costes mínimos y P es un vector de tamaño
-// G.numVert() tal que P[i] es el último vértice del camino
-// de origen a i.
+                        typename GrafoP<tCoste>::vertice destino,
+                        vector<typename GrafoP<tCoste>::vertice>& P)
 {
    typedef typename GrafoP<tCoste>::vertice vertice;
    vertice v, w;
    const size_t n = G.numVert();
-   vector<bool> S(n, false);                  // Conjunto de vértices vacío.
-   vector<tCoste> D;                          // Costes mínimos hasta destino.
-   int i;
-
-   // Iniciar D y P con caminos directos hasta el vértice destino.
-   for(i=0; i <= G.numVert() - 1; i++)
-   {
-      D[i] = G[i][destino]; //Se inicializa el vector entero con los costes directos desde i hasta destino 
-   }
-   D[destino] = 0;                             // Coste destino-destino es 0.
-   P = vector<vertice>(n, destino); //P alberga el nodo por el que hay que pasar antes para llegar al destino desde i
-
-   // Calcular caminos de coste mínimo hasta cada vértice.
-   S[destino] = true;                          // Incluir vértice destino en S.
-   for (size_t i = 1; i <= n-2; i++) 
-   {
-      // Seleccionar vértice w no incluido en S con menor coste hasta destino.
+   vector<bool> S(n, false);                  
+   vector<tCoste> D(n);                          
+  
+   // Para almacenar el coste desde cada vertice
+   // al destino copiamos la columna
+   
+   for (v = 0; v < n; v++)
+		D[v] = G[v][destino];				
+			
+   D[destino] = 0;                             	// Coste destino-destino es 0.
+   P = vector<vertice>(n, destino);				// Camino directo destino
+   S[destino] = true;         					// Camino hasta el destino ya es minimo
+   
+   //Comienza el calculo de caminos minimos
+   
+   for (size_t i = 1; i <= n-2; i++) {
+      
+      // Elegimos la arista minima
+      
       tCoste costeMin = GrafoP<tCoste>::INFINITO;
-      for (v = 0; v <= n-1; v++)
-      {
-         if (!S[v] && D[v] <= costeMin) 
-         {
+      for (v = 0; v < n; v++)
+         if (!S[v] && D[v] <= costeMin) {
             costeMin = D[v];
             w = v;
          }
-      }
-      S[w] = true;                          // Incluir vértice w en S.
-      // Recalcular coste desde cada v no incluido en S a través de w hasta destino
+         
+      S[w] = true;                        		// Vertice ya seleccionado
+      
+      // Recalcular camino m�s corto, camino anterior
+      // o nuevo camino a trav�s del vertice selecionado
+      
       for (v = 0; v < n; v++)
-         if (!S[v]) 
-         {
-            tCoste vwd = suma(D[w], G[v][w]);
-            if (vwd < D[v]) 
-            {
-               D[v] = vwd;
+         if (!S[v]) {
+            tCoste Vwd = suma(D[w], G[v][w]);	// G[v][w] coste desde v a w
+            if (Vwd < D[v]) {
+               D[v] = Vwd;						// Camino desde v pasando por w a destino
                P[v] = w;
             }
          }
    }
+   
    return D;
 }
-
 template <typename tCoste> typename GrafoP<tCoste>::tCamino
 camino(typename GrafoP<tCoste>::vertice orig,
        typename GrafoP<tCoste>::vertice v,
