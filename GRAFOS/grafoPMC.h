@@ -93,6 +93,7 @@ public:
       explicit arista(vertice v = vertice(), vertice w = vertice(),
                       tCoste c = tCoste()): orig(v), dest(w), coste(c) {}
       bool operator <(const arista& a) const {return coste < a.coste;}
+      bool operator >(const arista& a) const {return coste > a.coste;}
    };
    typedef Lista<vertice> tCamino;
 
