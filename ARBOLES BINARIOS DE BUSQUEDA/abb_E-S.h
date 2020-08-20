@@ -39,3 +39,21 @@ void MostrarAbb(const Abb<T>& A){
 		
 	}
 }
+
+
+template<typename T>
+friend void MostrarApo(const Apo<T>& A){
+
+	std::cout<<A.cima()<<std::endl;
+	if(!A.hIzq().vacio())
+	{
+		std::cout<<"Hijo izq de "<<A.cima()<<" : ";
+		MostrarAbb(A.hIzq());
+	}
+	if(!A.hDer().vacio())
+	{
+		std::cout<<"Hijo der de "<<A.cima()<<" : ";
+		MostrarAbb(A.hDer());
+		
+	}
+}
