@@ -30,7 +30,7 @@ int main () {
 	
 	cout<<"Una vez borrado queda:"<<endl;
 	cout<<endl;
-	Podar('b',A);
+	Podar('d',A);
 
 	imprimirAgen(A);
 }
