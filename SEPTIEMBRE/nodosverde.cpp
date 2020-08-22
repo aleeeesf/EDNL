@@ -21,7 +21,7 @@ int main () {
 	Agen<char> A(64), B(64);
 
 	cout << "\n*** Lectura de árbol A de agen.dat ***\n";
-	ifstream fe("agen.txt"); // Abrir fichero de entrada.
+	ifstream fe("agenver.txt"); // Abrir fichero de entrada.
 	rellenarAgen(fe, A); // Desde fichero.
 	fe.close();
 	cout << "\n*** Mostrar árbol A ***\n";
@@ -38,25 +38,23 @@ int nodos_verde(const Agen<T>& A)
 
 int contar_nodos_verde(const nodo& n, const Agen<T>& A)
 {
+	int cont = 0;
+	
 	if(n != Agen<T>::NODO_NULO)
-	{			
-		int cont = 0;		
+	{	
 		if(es_nodo_verde(n,A)) cont++;
 		
-		else
+		nodo hijo = A.hijoIzqdo(n);
+			
+		while(hijo != Agen<T>::NODO_NULO)
 		{
-			
-			nodo hijo = A.hijoIzqdo(n);
-			
-			while(hijo != Agen<T>::NODO_NULO)
-			{
-				cont += contar_nodos_verde(hijo,A);
-				hijo = A.hermDrcho(hijo);
-			}
-			return cont;
+			cont += contar_nodos_verde(hijo,A);
+			hijo = A.hermDrcho(hijo);
 		}
+		return cont;
 	}
 }
+
 
 bool es_nodo_verde(const nodo& n, const Agen<T>& A)
 {
