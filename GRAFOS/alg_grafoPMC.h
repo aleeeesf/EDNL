@@ -69,6 +69,7 @@ Funciones:
 #include "apo.h"            // para Prim y Kruskall
 #include "particion.h"      // para Kruskall
 
+class Particion;
 /*----------------------------------------------------------------------------*/
 /* Caminos de coste mínimo                                                    */
 /*----------------------------------------------------------------------------*/

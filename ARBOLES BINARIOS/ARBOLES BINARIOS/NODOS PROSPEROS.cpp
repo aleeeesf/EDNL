@@ -42,7 +42,7 @@ int main() {
 	imprimirAbin(fs,B,fin);
 	fs.close();
 	*/
-	ifstream fe("abin2.txt");
+	ifstream fe("abin.txt");
 	rellenarAbin(fe,A);
 	fe.close();
 

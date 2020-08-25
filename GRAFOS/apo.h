@@ -12,7 +12,6 @@
 
 #ifndef APO_H
 #define APO_H
-#include "abb_E-S.h"
 #include <cassert>
 
 template <typename T> class Apo {
@@ -24,7 +23,6 @@ public:
    bool vacio() const;
    Apo(const Apo& A);                   // ctor. de copia
    Apo& operator =(const Apo& A);       // asignación de apo
-   friend void MostrarApo(const Apo<T>& A);
    ~Apo();                              // destructor
 private:
    typedef int nodo; // índice de la matriz

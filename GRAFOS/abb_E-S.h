@@ -43,7 +43,7 @@ void MostrarAbb(const Abb<T>& A){
 	}
 }
 
-
+/*
 template<typename T>
 void MostrarApo(const Apo<T>& A){
 
@@ -59,4 +59,4 @@ void MostrarApo(const Apo<T>& A){
 		MostrarAbb(A.hDer());
 		
 	}
-}
+}*/

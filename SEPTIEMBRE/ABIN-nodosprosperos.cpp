@@ -11,8 +11,8 @@ using nodo = Abin<T>::nodo;
 double nodos_prosperos(const Abin<T>& A);
 int contar_nodos_prosperos(const nodo& n, const Abin<T>& A);
 bool es_prospero(const nodo& n, const Abin<T>& A);
-bool mayor_ascendientes(const nodo& n, const Abin<T>& A);
-bool menor_descendientes(const nodo& n, const Abin<T>& A);
+bool mayor_ascendientes(const nodo& n, const Abin<T>& A, int riqueza);
+bool menor_descendientes(const nodo& n, const Abin<T>& A, int riqueza);
 int num_nodos(const nodo& n, const Abin<T>& A);
 
 int main()
@@ -39,7 +39,7 @@ int main()
 double nodos_prosperos(const Abin<T>& A)
 {
 	double n_nodos_prosp = (double)contar_nodos_prosperos(A.raiz(),A);
-	return (n_nodos_prosp/(double)num_nodos(A.raiz(),A));
+	return (100 * n_nodos_prosp/(double)num_nodos(A.raiz(),A));
 }
 
 int contar_nodos_prosperos(const nodo& n, const Abin<T>& A)
@@ -55,39 +55,53 @@ int contar_nodos_prosperos(const nodo& n, const Abin<T>& A)
 
 bool es_prospero(const nodo& n, const Abin<T>& A)
 {
-	return(mayor_ascendientes(n,A) && menor_descendientes(n,A));
+	return(mayor_ascendientes(n,A,A.elemento(n)) && menor_descendientes(n,A,A.elemento(n)));
 }
 
-bool mayor_ascendientes(const nodo& n, const Abin<T>& A)
+bool mayor_ascendientes(const nodo& n, const Abin<T>& A, int riqueza)
 {
 	if(A.padre(n) == Abin<T>::NODO_NULO) return true;
 	
 	else
 	{
-		if(A.elemento(n) > A.elemento(A.padre(n))) return false;
-		else return mayor_ascendientes(A.padre(n),A);
+		if(riqueza < A.elemento(A.padre(n))) return false;
+		else return mayor_ascendientes(A.padre(n),A,riqueza);
 	}
 }
 
-bool menor_descendientes(const nodo& n, const Abin<T>& A)
+bool menor_descendientes(const nodo& n, const Abin<T>& A, int riqueza)
 {
-	if(n == Abin<T>::NODO_NULO) return true;
+	nodo Izq = A.hijoIzqdo(n);
+	nodo Der = A.hijoDrcho(n);
+		
+	if(Izq == Abin<T>::NODO_NULO && Der == Abin<T>::NODO_NULO) return true;
 	
 	else
 	{
-		nodo Izq = A.hijoIzqdo(n);
-		nodo Der = A.hijoDrcho(n);
+
+		if(Izq != Abin<T>::NODO_NULO && Der != Abin<T>::NODO_NULO)
+		{
+			if(riqueza > A.elemento(Izq) || riqueza > A.elemento(Der))
+				return false;
+				
+			else return menor_descendientes(Der,A,riqueza) && menor_descendientes(Izq,A,riqueza);		
+		}
 		
-		if(A.elemento(n) > A.elemento(Izq) && A.elemento(n) > A.elemento(Der))
-			return false;
-			
-		else if(A.elemento(n) > A.elemento(Izq) && A.elemento(n) < A.elemento(Der))
-			return false;
-			
-		else if(A.elemento(n) < A.elemento(Izq) && A.elemento(n) > A.elemento(Der))
-			return false;
-			
-		else return 
+		else if(Izq == Abin<T>::NODO_NULO && Der != Abin<T>::NODO_NULO)
+		{
+			if(riqueza > A.elemento(Der))
+				return false;
+				
+			else return menor_descendientes(Der,A,riqueza);	
+		}
+		
+		else
+		{
+			if(riqueza > A.elemento(Izq))
+				return false;
+				
+			else return menor_descendientes(Izq,A,riqueza);	
+		}		
 	}
 }
 

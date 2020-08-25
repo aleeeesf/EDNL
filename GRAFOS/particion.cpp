@@ -6,7 +6,7 @@
 /* compresión de caminos.                                 */
 /*--------------------------------------------------------*/
 
-#include "particion.hpp"
+#include "particion.h"
 
 // El árbol con mayor altura se convierte en subárbol del otro.
 void Particion::unir(int a, int b)
