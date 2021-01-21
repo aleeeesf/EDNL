@@ -44,9 +44,10 @@ vertice Buscar_Cliente(const matriz<tCoste>& G, const vector<bool>& Repartidos, 
 	{
 		costemin = G[origen][i];
 		
-		if(costemin < minimo && !Repartidos[i])	//Guardamos el cliente mas cercano que 
+		if(costemin < minimo && !Repartidos[i] && origen != minimo)	//Guardamos el cliente mas cercano que 
 		{										//quede por repartir
 			Cliente = i;
+			minimo = costemin;
 		}
 	}
 	

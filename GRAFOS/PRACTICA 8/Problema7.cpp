@@ -74,7 +74,7 @@ GrafoP<tCoste> Distancia_Ciudades(const vector<Ciudad>& isla)
 	
 	for(int i = 0; i <= isla.size()-1; i++)
 	{
-		for(int j = 0; j <= isla.size()-1; i++)
+		for(int j = 0; j <= isla.size()-1; j++)
 		{
 			if(i != j)
 				G[i][j] = G[j][i] = Distancia(isla[i], isla[j]);
