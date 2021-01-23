@@ -23,6 +23,22 @@ void LeerAbb(Abb<T>& A){
 }
 
 
+void LeerAbb(Abb<contacto>& A){
+
+	int elto;
+	string nombre;
+	std::cout<<"Lectura del arbol ABB (fin: 'parar')"<<std::endl;
+	
+	do{
+		std::cout<<"Introduce el nombre a insertar: ";
+		cin>>nombre;
+		std::cin>>elto;
+		if(nombre != "parar") A.insertar(contacto(nombre,elto));
+	}while(elto != -1);
+
+}
+
+
 template<typename T>
 void MostrarAbb(const Abb<T>& A){
 
@@ -40,7 +56,7 @@ void MostrarAbb(const Abb<T>& A){
 	}
 }
 
-
+/*
 template<typename T>
 friend void MostrarApo(const Apo<T>& A){
 
@@ -56,4 +72,4 @@ friend void MostrarApo(const Apo<T>& A){
 		MostrarAbb(A.hDer());
 		
 	}
-}
+}*/
